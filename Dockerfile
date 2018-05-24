@@ -17,9 +17,14 @@ RUN pip install jupyterhub
 RUN pip install nbgrader
 RUN pip install git+https://github.com/jupyterhub/oauthenticator.git
 RUN pip install tornado==4.4 # workaround 
+RUN pip install sklearn
+
 
 RUN pip install ipywidgets
 RUN jupyter nbextension enable --sys-prefix --py widgetsnbextension
+
+RUN pip install ipympl==0.1.0
+RUN jupyter nbextension enable --py --sys-prefix ipympl 
 
 RUN pip install fileupload
 RUN jupyter nbextension install --sys-prefix --py fileupload
@@ -32,9 +37,12 @@ RUN jupyter nbextension disable --sys-prefix create_assignment/main
 RUN jupyter nbextension disable --sys-prefix formgrader/main --section=tree
 RUN jupyter serverextension disable --sys-prefix nbgrader.server_extensions.formgrader
 
+
+
 RUN mkdir -p /hub/home/theotheo
 RUN useradd theotheo -b /hub/home
 RUN chown theotheo /hub/home/theotheo
+
 
 USER theotheo
 RUN jupyter nbextension enable --user create_assignment/main
@@ -43,7 +51,10 @@ RUN jupyter serverextension enable --user nbgrader.server_extensions.formgrader
 
 USER root
 
-
+RUN pip install -U teacher_nbextension
+RUN jupyter nbextension install teacher_nbextension --py --sys-prefix 
+RUN jupyter nbextension enable --py --sys-prefix  teacher_nbextension 
+RUN jupyter serverextension enable --py --sys-prefix teacher_nbextension 
 
 ADD jupyterhub_config.py jupyterhub_config.py
 ADD nbgrader_config.py /etc/jupyter/nbgrader_config.py
@@ -54,11 +65,6 @@ RUN chmod ugo+rw /hub/exchange
 
 VOLUME /hub
 
-
-
 ADD logo.png logo.png
 
-RUN pip install ipympl==0.1.0
-RUN jupyter nbextension enable --py --sys-prefix ipympl 
-
-EXPOSE 10000
+EXPOSE 9999
