@@ -51,6 +51,7 @@ RUN jupyter serverextension enable --user nbgrader.server_extensions.formgrader
 
 USER root
 
+ARG CACHEBUST=1
 RUN pip install -U teacher_nbextension
 RUN jupyter nbextension install teacher_nbextension --py --sys-prefix 
 RUN jupyter nbextension enable --py --sys-prefix  teacher_nbextension 
@@ -67,4 +68,4 @@ VOLUME /hub
 
 ADD logo.png logo.png
 
-EXPOSE 9999
+EXPOSE 10000
