@@ -42,7 +42,7 @@ Hack Hack Hack
 - создать в корне новую тетрадку
 - выполнить там команду `! tar -zcvf dl-lsh.tar.gz assignment/`
 - скачать к себе на компьютер получившийся архив
-- отправить его на почту deepleaning@letnyayashkola.org
+- отправить его на почту deeplearning@letnyayashkola.org
 
 
 ### Ожидание результатов
